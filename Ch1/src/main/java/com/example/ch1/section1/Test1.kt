@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 
 // 비동기를 목적으로 하는 코드를 작성하겠다.
-fun main() = runBlocking() {
+fun main() = runBlocking {
     println("main step 1")
 
     // 동기 - case 0
