@@ -6,8 +6,6 @@ import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 import kotlin.system.measureTimeMillis
 
-// 일시정지된 작업은 어떻게 기억했다가 다시 실행되나요?
-
 // vs thread ... non-blocking
 // runBlocking - main 함수내에서코투틴을 이용하기 위한 용도로만 제공한다.
 // 범용적으로 runBlocking을 사용하진 않는다.
