@@ -21,7 +21,7 @@ class MyScope() : CoroutineScope {
     override val coroutineContext: CoroutineContext
         // 사칙연산자라고 생각하기보다 연산자 재정의라고 생각하자
         // 필요한 만큼 설정 작업을 추가한다.
-        get() = Dispatchers.Default + scopeJob
+        get() = Dispatchers.Default + scopeJob  // scopeJob을 추가했으니 한번에 코루틴을 제어할 수 있다.
 }
 
 // runBlocking에 스코프가 지정되어있기 때문에 앞에서 사용했을 때 스코프 지정안해도 됐던것
