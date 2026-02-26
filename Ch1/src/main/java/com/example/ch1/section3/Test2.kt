@@ -86,6 +86,40 @@ fun main() = runBlocking {
     // finally 에서 다시 exception이 발생하는 코드가 있을 수도 있다. delay같은..
     // 정상적으로 finally 가 모두 실행되지 못할 가능성도 있다.
     // 그래서
+    val job = launch(Dispatchers.IO) {
+        try {
+            // 알고리즘 때문에 필요해서 시스템 시간을 가져왔다.
+            var start = System.currentTimeMillis()
+            var i = 0
+            while (i < 5) {
+                if (isActive) {
+                    // delay 함수를 사용하기 싫어서 아래 알고리즘을 사용
+                    if (System.currentTimeMillis() >= start) {
+                        i++
+                        println("coroutine : $i")
+                        start += 500
+                    }
+                } else {
+                    throw CancellationException()
+                }
+            }
+        } finally {
+            repeat(3) {
+                println("coroutine finally.. $it")
+                delay(100)      // cancel하면 여기에서 exception이 발생
+            }
+        }
+    }
+
+    //main start...
+    //coroutine : 1
+    //coroutine : 2
+    //coroutine : 3
+    //main cancel coroutine...
+    //coroutine finally.. 0
+    //main end...
+
+    // case 5 - exception이 발생하는 부분이라고 하더라도 정상 실행을 하고 싶다면
 //    val job = launch(Dispatchers.IO) {
 //        try {
 //            // 알고리즘 때문에 필요해서 시스템 시간을 가져왔다.
@@ -104,49 +138,15 @@ fun main() = runBlocking {
 //                }
 //            }
 //        } finally {
-//            repeat(3) {
-//                println("coroutine finally.. $it")
-//                delay(100)      // cancel하면 여기에서 exception이 발생
+//            // withContext 영역에서 실행하는 코드들은 exception을 발생하더라도 cancel 되지 않는다.
+//            withContext(NonCancellable) {
+//                repeat(3) {
+//                    println("coroutine finally.. $it")
+//                    delay(100)      // cancel하면 여기에서 exception이 발생
+//                }
 //            }
 //        }
 //    }
-
-    //main start...
-    //coroutine : 1
-    //coroutine finally.. 0
-    //coroutine finally.. 1
-    //coroutine finally.. 2
-    //main cancel coroutine...
-    //main end...
-
-    // case 5 - exception이 발생하는 부분이라고 하더라도 정상 실행을 하고 싶다면
-    val job = launch(Dispatchers.IO) {
-        try {
-            // 알고리즘 때문에 필요해서 시스템 시간을 가져왔다.
-            var start = System.currentTimeMillis()
-            var i = 0
-            while (i < 5) {
-                if (isActive) {
-                    // delay 함수를 사용하기 싫어서 아래 알고리즘을 사용
-                    if (System.currentTimeMillis() >= start) {
-                        i++
-                        println("coroutine : $i")
-                        start += 500
-                    } else {
-                        throw CancellationException()
-                    }
-                }
-            }
-        } finally {
-            // withContext 영역에서 실행하는 코드들은 exception을 발생하더라도 cancel 되지 않는다.
-            withContext(NonCancellable) {
-                repeat(3) {
-                    println("coroutine finally.. $it")
-                    delay(100)      // cancel하면 여기에서 exception이 발생
-                }
-            }
-        }
-    }
 
     //main start...
     //coroutine : 1
