@@ -1,9 +1,9 @@
 package com.example.ch2
 
 import android.app.Application
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.auth
 
 class MyApplication : Application() {
     // 마치 static 처럼 이용가능
