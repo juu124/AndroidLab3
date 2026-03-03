@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,7 +28,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-
+        binding.addFab.setOnClickListener {
+            if (MyApplication.checkAuth()) {
+                startActivity(Intent(this, AddActivity::class.java))
+            } else {
+                Toast.makeText(this, "인증을 먼저 진행해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onStart() {
