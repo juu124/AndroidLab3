@@ -48,7 +48,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun saveStore() {
-        val format = SimpleDateFormat("yyyy-mm-dd")
+        val format = SimpleDateFormat("yyyy-MM-dd")
         // 저장하고자 하는 데이터
         val data = mapOf(
             "email" to MyApplication.email,

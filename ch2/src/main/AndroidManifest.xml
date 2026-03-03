@@ -9,6 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidLab3">
+<!--        fcm 에 의해 시스템에서 실행.. 우리가 직접 실행시키는 것이 아니다. 그래서 시스템의 정보랑 맞춰놓아야 한다.-->
+<!--        다른 앱에서 인텐트에 의해서 실행시키지 못하게 exported = false 한다.-->
+        <service
+            android:name=".MyFirebaseMessageService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".AddActivity"
             android:exported="false" />
