@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidLab3">
         <activity
+            android:name=".AddActivity"
+            android:exported="false" />
+        <activity
             android:name=".AuthActivity"
             android:exported="false" />
         <activity

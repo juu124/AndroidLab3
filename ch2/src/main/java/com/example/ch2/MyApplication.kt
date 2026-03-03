@@ -4,12 +4,17 @@ import android.app.Application
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MyApplication : Application() {
     // 마치 static 처럼 이용가능
     companion object {
         val auth: FirebaseAuth by lazy {
             Firebase.auth
+        }
+
+        val db: FirebaseFirestore by lazy {
+            FirebaseFirestore.getInstance()
         }
 
         // 로그인 성공시에 로그인 id, 앱 전역에서 사용해서
