@@ -7,11 +7,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.example.ch3.R
 import com.example.ch3.databinding.ActivityTest1Binding
 
 class Test1Activity : AppCompatActivity() {
+
+    var activityCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,11 +41,33 @@ class Test1Activity : AppCompatActivity() {
         // 가장 많이 사용하는 형태
         val viewModel: MyViewModel1 by viewModels()
 
-
         binding.button.setOnClickListener {
             // ViewModel 의 멤버(변수, 함수) 이용
             Toast.makeText(this, "${viewModel.data}, ${viewModel.someFun()}", Toast.LENGTH_SHORT)
                 .show()
+            activityCount++
+            viewModel.viewModelCount++
         }
+
+        binding.button2.setOnClickListener {
+            Toast.makeText(this, "$activityCount, ${viewModel.viewModelCount}", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    // activity의 lifecycle을 이용해 상태 유지하는 방법
+    // Bundle 을 이용하는 방법임으로 내부적으로 데이터가 직렬화, 역직렬화가 반복되어 성능에 부담스러울 수 있다.
+    // 그래서 간단한 데이터는 괜찮지만, 무거운 데이터는 이 방식으로 하기에는 무리가 있다.
+    // ViewModel을 이용한다면, Activity에서 B/L(비즈니스 로직)을 분리한다.
+    // 데이터는 주로 B/L를 처리하는 곳에서 발생한다.
+    // ==> ViewModel 에서 데이터 유지
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("count", activityCount)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        activityCount = savedInstanceState.getInt("count")
     }
 }
