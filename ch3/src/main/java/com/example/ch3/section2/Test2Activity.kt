@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.ch3.R
 import com.example.ch3.databinding.ActivityTest2Binding
+import kotlinx.coroutines.launch
 
 class Test2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,16 @@ class Test2Activity : AppCompatActivity() {
         })
 
         binding.button3.setOnClickListener {
-            viewModel.changeCount()
+//            viewModel.changeCount()
+
+//            viewModel.job1()
+
+            lifecycleScope.launch {
+                viewModel.job2()
+                    .collect {
+                        Log.d("jay", "count : $it")
+                    }
+            }
         }
     }
 }
