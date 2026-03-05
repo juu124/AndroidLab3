@@ -27,4 +27,12 @@ interface UserDAO {
 
     @Query("SELECT * FROM user WHERE id = :id")
     fun getUserCursor(id: Int): Cursor
+
+
+    // Converter 테스트 ==============================
+    @Insert
+    fun insertCustomer(customer: Customer)
+
+    @Query("SELECT * FROM Customer")
+    fun getAllCustomer(): List<Customer>
 }

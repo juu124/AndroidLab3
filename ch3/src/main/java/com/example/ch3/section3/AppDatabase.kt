@@ -2,6 +2,7 @@ package com.example.ch3.section3
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -17,7 +18,8 @@ val migration = object : Migration(1, 2) {
 // 앱 내에 DAO 도 여러개
 // Entity, DAO 등록...
 
-@Database(entities = arrayOf(User::class), version = 2)
+@Database(entities = arrayOf(User::class, Customer::class), version = 2)
+@TypeConverters(MyConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     // DAO 를 획득하기 위한 함수 선언
     abstract fun userDao(): UserDAO

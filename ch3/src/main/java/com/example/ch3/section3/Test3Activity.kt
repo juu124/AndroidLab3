@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class Test3Activity : AppCompatActivity() {
 
@@ -80,15 +81,33 @@ class Test3Activity : AppCompatActivity() {
 //            }
 
             // migration 테스트 ================================
-            val user = User(0, "gildong4", "hong4", "a@a.com")
-            dao.insertUser(user)
-            dao.getAll().forEach {
+//            val user = User(0, "gildong4", "hong4", "a@a.com")
+//            dao.insertUser(user)
+//            dao.getAll().forEach {
+//                resultTxt += "$it \n"
+//            }
+//            binding.textView.text = resultTxt
+            // =================================================
+
+            // converter 테스트 =================================
+            val list = mutableListOf<String>("data1", "data2")
+            val customer = Customer(
+                id = 0,
+                name = "kim",
+                address = Address (
+                    id = 0,
+                    street = "a",
+                    state = "a",
+                    city = "a"
+                ),
+                datas = list,
+                regData = Date()
+            )
+            dao.insertCustomer(customer)
+            dao.getAllCustomer().forEach {
                 resultTxt += "$it \n"
             }
             binding.textView.text = resultTxt
-            // =================================================
-
-
         }
     }
 }
