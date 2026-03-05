@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -44,5 +45,12 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+
+    implementation("androidx.room:room-ktx:2.6.1")
+    // ksp : 코틀린 언어에서 지원하는 어노테이션 해석기.. room의 어노테이션 해석 방법을 알려줘야 한다.
+    ksp("androidx.room:room-compiler:2.6.1")
+    // json 파서.. room의 converter에서 사용하려고
+    implementation("com.google.code.gson:gson:2.10.1")
 }
