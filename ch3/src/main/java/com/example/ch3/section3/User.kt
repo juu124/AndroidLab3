@@ -12,6 +12,7 @@ data class User(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var lastName: String,
-    var firstName: String
+    var firstName: String,
+    var email: String?
 )
 

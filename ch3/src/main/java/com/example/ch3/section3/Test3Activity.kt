@@ -37,6 +37,7 @@ class Test3Activity : AppCompatActivity() {
             // room 기본으로 dbms 는 백그라운드 스레드에 의해 실행되어야 한다.
             // 만약 메인 스레드에서 실행시키려면 선언해야 한다.
             .allowMainThreadQueries()
+            .addMigrations(migration)   // 스키마 수정
             .build()
 
         dao = db.userDao()
@@ -73,10 +74,21 @@ class Test3Activity : AppCompatActivity() {
 //                    }
 //            }
 
-            val cursor = dao.getUserCursor(1)
-            if(cursor.moveToFirst()) {
-                binding.textView.text = "3 .. ${cursor.getString(1)}, ${cursor.getString(2)}"
+//            val cursor = dao.getUserCursor(1)
+//            if(cursor.moveToFirst()) {
+//                binding.textView.text = "3 .. ${cursor.getString(1)}, ${cursor.getString(2)}"
+//            }
+
+            // migration 테스트 ================================
+            val user = User(0, "gildong4", "hong4", "a@a.com")
+            dao.insertUser(user)
+            dao.getAll().forEach {
+                resultTxt += "$it \n"
             }
+            binding.textView.text = resultTxt
+            // =================================================
+
+
         }
     }
 }
